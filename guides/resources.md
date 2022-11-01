@@ -1,74 +1,4 @@
-# Overview
-Computing resources are made available at SLAC Data Facility (SDF). The [official documentation of SDF](https://ondemand-dev.slac.stanford.edu/public/doc/#/getting-started) is available though it is also under development still as of September 2020. This page provides a complementary (and a bit of duplicate) documentation to the official SDF one with an aim to guide neutrino users. In particular this covers 4 categories...
-
-* **Gateway**: how can I access computing servers for doing my work?
-* **Storage**: where is my space? where to keep my data files?
-* **Softwares**: how can I set up a software stuck? how can I add more softwares?
-* **Computing**: how to submit batch (=unattended, automated) job to run your computing script?
-
-## Gateway / Access
-You can access to SDF either from a web-browser or a terminal. These methods are complementary to each other in strengthe, and you are encouraged to try both methods at least once.
-
-### Interactive access via `ssh` (a terminal-based method). 
-  * From your laptop/desktop terminal, you can access SDF via [secure shell (SSH)](https://en.wikipedia.org/wiki/Secure_Shell). 
-```
-ssh $USER@sdf-login.slac.stanford.edu
-```
-
-**If you read to the end of this guide**, you will also learn how to access computing resources within a native web-browser on your laptop or desktop :) Keep reading!
-
-
-### Data transfer to SDF from outside
-Data transfer to SDF should be done using an appropriate data transfer nodes. 
-  - **Please do not transfer data via `scp` through `sdf-login.slac.stanford.edu`**.
-  - If you want to use `scp`, use `sdf-dtn.slac.stanford.edu` (dtn stands for data transfer node).
-  - You can also use `globus` to transfer data files (that would correctly use the right nodes underneath).
-
-## Storage space 
-On each server machine, you typically have 3 types of space to work.
-* `$HOME` ... 25GB space by default.
-    * Network mounted = accessible from different machines.
-
-* `/sdf/group/neutrino` ... global (network mounted) group space.
-  * Network mounted = accessible from different machines
-  * No purging policy. Keep your usage < 1TB (system does not enforce this limit) 
-	* This is `$GROUP` in [official documentation](https://ondemand-dev.slac.stanford.edu/public/doc/#/getting-started?id=disk).
-  * Create "your group space" and feel free to store files underneath.
-  ```
-  mkdir /sdf/group/neutrino/$USER
-  ``` 
-
-* `/scratch` ... global (network mounted) scratch space.
-  * Network mounted = accessible from different machines
-  * Purged approximately once a month. 
-	* This is `$SCRATCH` in [official documentation](https://ondemand-dev.slac.stanford.edu/public/doc/#/getting-started?id=disk).
-  * Create "your global scratch space" and feel free to store files underneath.
-  ```
-  mkdir /scratch/$USER
-  ``` 
-  
-* `/lscratch/$USER` ... local RAID0 SSD space for fast read/write (no networking involved) **only on a batch worker node**.
-  * Local disk = not accessible from different machines. **`sdf-login` nodes are not batch worker node.**
-  * Files written in this space will be purged after you log out (i.e. per job).
-  * This is `$LSCRATCH` in [official documentation](https://ondemand-dev.slac.stanford.edu/public/doc/#/getting-started?id=disk).
-  
-
-
-## Software stacks
-
-* **Singularity**
-  * At SLAC we recommend the use of a [Singularity container](https://sylabs.io/singularity/) to carry around and setup a software environment. Note if you are using `Open On-Demand`, your session lives inside a singularity container and you should not be following the instructions below. If you logged in using `ssh` or launching `slurm` job, this instruction is relevant.
-  * Shared `Singularity` container images can be found at `/sdf/group/neutrino/images`.
-  * If you aren't sure about `Singularity` or which container to use, you can just try:
-  ```
-  $> singularity exec --nv --bind /gpfs,/sdf,/scratch /sdf/group/neutrino/images/latest.sif bash
-  ```
-  * See the official documentation or [here](https://github.com/DeepLearnPhysics/playground-singularity/wiki) for getting started with `Singularity`.
-
-* **CernVM File System (CVMFS)**
-  * [CVMFS](https://cernvm.cern.ch/portal/filesystem) is also available at SLAC. Anyone who uses it should help documenting here.
-
-## Computing
+# Computing
 Any computing, no matter how light it is, should be done using a dedicated computing server.
 NOPE! `sdf-login.slac.stanford.edu` is not a computing server :) so it's good not to work on that node.
 This section briefly explains how to use [slurm](https://slurm.schedmd.com/documentation.html) with which you can access computing servers.
@@ -80,7 +10,7 @@ There are 3 ways to use slurm:
 
 The following guide demonstrates how you can play in all three ways.
 
-### Computing resources
+## Computing resources
 Before submitting a computing job, it is important to understand accessible resources at SLAC.
 There are different sets of resources and they are called **partitions**.
 Access a particular set of resources is controlled by specifying a unique partition name.
@@ -115,7 +45,7 @@ Getting a computing account (with a unix group `nu`) does not automatically give
 If you have a concern and want to a consultation on submitting a large number of jobs, please [contact Kazu](mailto:kterao@slac.stanford.edu).
 
 
-### Interactive access through a terminal
+## Interactive access through a terminal
 
 One basic option is to access a computing resource interactively on a terminal. 
 This would look literally like you are _logging (or ssh-ing) into a server dedicated for computing_.
@@ -150,7 +80,7 @@ Look at the FAQ + [message kazu](mailto:kterao@slac.stanford.edu) or slack him i
 There are more option flags to better control the use of computing resource.
 You learn more below where we try a batch job submission.
 
-### Batch job submission
+## Batch job submission
 
 Once you finish developing your code, you may have a script that runs data processing by a single line of a command. 
 You may not want to wait for this process to finish running in an interactive session.
@@ -189,6 +119,7 @@ sbatch example.sh
 
 [![asciicast](https://asciinema.org/a/532704.svg)](https://asciinema.org/a/532704)
 
+
 Yep, it's that simple! 
 
 Let's walk through the contents of `example.sh`.
@@ -205,13 +136,12 @@ Let's walk through the contents of `example.sh`.
 Some of these flags already showed up in the example of an interactive session with `srun`. 
 I hope this explains the gists of how to submit a slurm batch job.
 
-### Interactive access through a web-browser (Jupyter)
+## Interactive access through a web-browser (Jupyter)
 
 This is probably the most popular way of accessing the computing resource (hence it comes at the end :D).
 
 Click the thumbnail below and watch a [YouTube tutorial movie](https://youtu.be/NhigtAK2BGM)!
 
-[![Youtube Movie](https://img.youtube.com/vi/NhigtAK2BGM/0.jpg)](https://www.youtube.com/watch?v=NhigtAK2BGM)
 
 
-
+[Youtube Movie](https://www.youtube.com/embed/NhigtAK2BGM ':include :type=iframe width=100% height=800px')

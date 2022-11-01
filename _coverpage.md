@@ -2,10 +2,9 @@
 
 # SLAC Neutrino + ML group wiki
 
-> All sorts of computing guides.
+> Happy computing :)
 
 - What else is there to say?
 
-[Tutorials](http://deeplearnphysics.org/lartpc_mlreco3d_tutorials)
-[ReadTheDocs](http://lartpc-mlreco3d.readthedocs.io)
+[GitHub](https://github.com/drinkingkazu/NuWiki)
 [Wiki](#welcome-to-nu-wiki)
