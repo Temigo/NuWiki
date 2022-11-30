@@ -5,5 +5,5 @@
 
 - LArTPC experiments
   - ICARUS
-    - [Making simulation samples](icarus/production.md)
+    - [Making samples for `lartpc_mlreco3d`](icarus/sample.md)
     - [Useful numbers](icarus/numbers.md)
