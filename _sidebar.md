@@ -6,4 +6,5 @@
 - LArTPC experiments
   - ICARUS
     - [Making samples for `lartpc_mlreco3d`](icarus/sample.md)
+    - [Training the full chain](icarus/training.md)
     - [Useful numbers](icarus/numbers.md)
